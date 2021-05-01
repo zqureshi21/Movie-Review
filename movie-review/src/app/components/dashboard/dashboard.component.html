@@ -1,0 +1,19 @@
+<div class="container" id="dashboard">
+  <h1 id="dashboardHeader">Find A Movie!</h1>
+  <div id="searchBar">
+    <form class="form-inline waves-light" mdbWavesEffect>
+      <div class="md-form mt-0">
+        <input class="form-control mr-sm-2" type="text" id="searchInput" placeholder="Search by title or genre">
+      </div>
+    </form>
+  </div>
+  <div class="row">
+      <mat-card class="column">
+        <a (click)="openDialog()">
+        <mat-card-title id="movieTitle">Movie Title</mat-card-title>
+        <img mat-card-image>
+        <mat-card-content id="movieRating">Overall Rating: </mat-card-content>
+        </a>
+      </mat-card>
+  </div>
+</div>

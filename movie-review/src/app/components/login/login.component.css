@@ -1,6 +1,19 @@
 #loginHeader{
   text-align: center;
+  font-family: 'Avenir';
 }
 #mainHeader{
   text-align: center;
+  font-family: 'Avenir';
+}
+#formContainer{
+  display: inline-block;
+  width: 500px;
+}
+#loginForm{
+  display: inline-block;
+  width: 400px;
+}
+#loginBtn{
+  background-color: black;
 }

@@ -1,0 +1,39 @@
+#dashboardHeader{
+  text-align: center;
+  font-family: 'Avenir';
+}
+
+#movieRating{
+  text-align: center;
+  font-family: 'Avenir';
+}
+
+#movieTitle{
+  text-align: center;
+  font-family: 'Avenir';
+}
+
+.column {
+  float: left;
+  width: 33.33%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.row{
+  padding-top: 100px;
+}
+
+#searchBar{
+  position: absolute;
+  right: 0px;
+  width: 300px;
+  padding: 10px;
+}
+
+#searchInput{
+  font-family: 'Avenir';
+}
