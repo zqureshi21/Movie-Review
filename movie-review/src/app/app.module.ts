@@ -4,21 +4,25 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
-import {FormsModule} from "@angular/forms";
-import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DetailsComponent } from './components/details/details.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { FilterPipe } from './pipes/filter.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCardModule} from "@angular/material/card";
 import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MatFormFieldModule} from "@angular/material/form-field";
-import { DetailsComponent } from './components/details/details.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     DashboardComponent,
-    DetailsComponent
+    DetailsComponent,
+    FilterPipe
   ],
     imports: [
         BrowserModule,
@@ -28,11 +32,20 @@ import { DetailsComponent } from './components/details/details.component';
         BrowserAnimationsModule,
         MatCardModule,
         MatDialogModule,
-        MatFormFieldModule
+        MatFormFieldModule,
+        NgbModule,
+        ReactiveFormsModule
     ],
   providers: [
-    {provide: MatDialogRef,
-    useValue: {}}
+    {
+      provide: MatDialogRef,
+    useValue: {}
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+    useClass:AuthInterceptor,
+    multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

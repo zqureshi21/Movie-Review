@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../../_services/authentication.service';
-import { TokenStorageService } from '../../_services/token-storage.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { FormBuilder, FormGroup, Validators} from '@angular/forms'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,45 +9,33 @@ import { TokenStorageService } from '../../_services/token-storage.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  form: any = {
-    username: null,
-    password: null
-  };
-  isLoggedIn = false;
-  isLoginFailed = false;
-  errorMessage = '';
-  roles: string[] = ['user'];
+  form: FormGroup
+  displayErrorMessage = false;
 
-  constructor(private authService: AuthenticationService, private tokenStorage: TokenStorageService) { }
+  constructor(private authService: AuthenticationService, private fb:FormBuilder, private router: Router) {
+    this.form = this.fb.group({
+      username: ['',Validators.required],
+      password: ['',Validators.required]
+    });
+  }
 
-  ngOnInit(): void {
-    if (this.tokenStorage.getToken()) {
-      this.isLoggedIn = true;
-      this.roles = this.tokenStorage.getUser().roles;
+  ngOnInit(): void {}
+
+  login() {
+    let val = this.form.value;
+    if ((val.username != null) && (val.password != null)) {
+      this.authService.login(val.username, val.password)
+        .subscribe(
+          (data) => {
+            localStorage.setItem("id_token",data.accessToken)
+
+            this.router.navigateByUrl('');
+          },() =>{
+            this.displayErrorMessage = true;
+          }
+        );
+    }else{
+      console.log('Invalid username and/or password.')
     }
-  }
-
-  onSubmit(): void {
-    const { username, password } = this.form;
-
-    // this.authService.login(username, password).subscribe(
-    //   data => {
-    //     this.tokenStorage.saveToken(data.accessToken);
-    //     this.tokenStorage.saveUser(data);
-    //
-    //     this.isLoginFailed = false;
-    //     this.isLoggedIn = true;
-    //     this.roles = this.tokenStorage.getUser().roles;
-    //     this.reloadPage();
-    //   },
-    //   err => {
-    //     this.errorMessage = err.error.message;
-    //     this.isLoginFailed = true;
-    //   }
-    // );
-  }
-
-  reloadPage(): void {
-    window.location.reload();
   }
 }

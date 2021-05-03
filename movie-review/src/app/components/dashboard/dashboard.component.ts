@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { TokenStorageService } from '../../_services/token-storage.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {DetailsComponent} from "../details/details.component";
 
@@ -11,7 +10,7 @@ import {DetailsComponent} from "../details/details.component";
 export class DashboardComponent implements OnInit {
   currentUser: any;
 
-  constructor(private token: TokenStorageService, public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog) { }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DetailsComponent, {
@@ -23,8 +22,6 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.currentUser = this.token.getUser();
-  }
+  ngOnInit(): void {}
 
 }
