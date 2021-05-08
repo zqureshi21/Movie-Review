@@ -1,25 +1,65 @@
-<h1>Move Title</h1>
-<div>
+<app-navbar></app-navbar>
+<h1 id="movieTitle">{{movie.title}}</h1>
+<div id="movieInfo">
+  <label><b>Genre: </b></label>
+  <p>{{movie.genre}}</p>
   <label><b>Plot:</b></label>
-  <p>lorem ipsum.......</p>
+  <p>{{movie.plot}}</p>
   <label><b>Cast & Crew:</b></label>
-  <div>person 1, person 2, person 3</div><br>
-  <label><b>Genre:</b></label>
-  <div>Comedy</div><br>
+  <p>{{movie.cast}}</p>
   <label><b>Release Date:</b></label>
-  <div>04/23/2007</div><br>
+  <p>{{movie.releaseDate}}</p>
   <label><b>Language:</b></label>
-  <div>English</div><br>
+  <p>{{movie.language}}</p>
   <label><b>Collective Rating (out of 5):</b></label>
-  <div>4</div><br>
+  <p>{{movie.collectiveRating}}</p>
 </div>
-<div>
-  <mat-form-field class="example-full-width" id="commentBox">
-    <label><b>Leave a Comment:</b></label><br>
-    <textarea matInput rows="4" cols="40"></textarea>
-  </mat-form-field>
-</div>
-<div>
-  <label><b>Leave a Rating:</b></label><br>
-
+<div id="comments">
+  <h2><b>Comments and Reviews</b></h2>
+  <div *ngFor="let comment of comments">
+    <div class="shadow-lg card">
+      <h5 class="card-header">{{comment.users_id}}</h5>
+      <div class="card-body">
+        <ngb-rating [max]="5" [rate]="comment.rating" [readonly]="true"></ngb-rating>
+        <p class="card-text">{{comment.comment}}</p>
+        <button class="btn btn-light" *ngIf="comment.users_id === user.id">Edit</button>
+        <button class="btn btn-light" *ngIf="abilityToDelete(comment)" (click)="deleteComment(comment.id)">Delete</button>
+      </div>
+    </div>
+  </div>
+  <form [formGroup]="commentForm" (ngSubmit)="submitForm()">
+    <div class="modal-body">
+      <div class="container">
+        <div class="form-group">
+          <label for="title">Leave a Comment:</label>
+          <input type="text"
+                 class="form-control"
+                 formControlName="comment" required />
+        </div>
+        <div class="form-group">
+          <label for="Comment">Leave a Rating:</label>
+          <div class="rating">
+            <h4 style="color:#FFD700;">{{selected}}</h4>
+            <input data-line="Very Bad" id="oneStar" name="rating" type="radio" value="1" formControlName="rating" (click)="ratingInput($event)" class="radio-btn hide" />
+            <label for="oneStar">☆</label>
+            <input data-line="Bad" id="twoStar" name="rating" type="radio" value="2" formControlName="rating" (click)="ratingInput($event)" class="radio-btn hide" />
+            <label for="twoStar">☆</label>
+            <input data-line="Mediocre" id="threeStar" name="rating" type="radio" value="3" formControlName="rating" (click)="ratingInput($event)" class="radio-btn hide" />
+            <label for="threeStar">☆</label>
+            <input data-line="Good" id="fourStar" name="rating" type="radio" value="4" formControlName="rating" (click)="ratingInput($event)" class="radio-btn hide" />
+            <label for="fourStar">☆</label>
+            <input data-line="Great" id="fiveStar" name="rating" type="radio" value="5" formControlName="rating" (click)="ratingInput($event)" class="radio-btn hide" />
+            <label for="fiveStar">☆</label>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <button class="btn"
+              [disabled]="!commentForm.valid" style="background-color: #5fbae9">
+        Submit Form
+      </button>
+    </div>
+  </form>
 </div>

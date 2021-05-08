@@ -27,9 +27,10 @@ export class LoginComponent implements OnInit {
       this.authService.login(val.username, val.password)
         .subscribe(
           (data) => {
+            console.log('Data Access Token ' + data.accessToken);
             localStorage.setItem("id_token",data.accessToken)
 
-            this.router.navigateByUrl('');
+            this.router.navigateByUrl('dashboard');
           },() =>{
             this.displayErrorMessage = true;
           }

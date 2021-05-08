@@ -1,16 +1,25 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
+
+const moviesUrl = 'http://localhost:3000/dashboard/'
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class MoviesService {
-  itemsUrl = 'http://localhost:3000/dashboard/'
 
   constructor(private http: HttpClient) { }
 
-  getItems(): Observable<any>{
-    return this.http.get<any>(`${this.itemsUrl}`)
+  getMovies(): Observable<any>{
+    return this.http.get<any>(moviesUrl, httpOptions)
+  }
+
+  getUser(): Observable<any>{
+    return this.http.get<any>(moviesUrl + '/user');
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {DetailsComponent} from "../details/details.component";
+import { MoviesService } from 'src/app/services/movies.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,20 +9,23 @@ import {DetailsComponent} from "../details/details.component";
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  currentUser: any;
+  movies: any;
+  searchQuery: string = '';
 
-  constructor(public dialog: MatDialog) { }
+  constructor(private router: Router, private movieService: MoviesService) { }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(DetailsComponent, {
-      width: '400px',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+  getMovies(){
+    this.movieService.getMovies().subscribe(data =>{
+      this.movies = data;
+    })
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // if (!localStorage.getItem('id_token')){
+    //   console.log('no id token')
+    //   this.router.navigateByUrl('login')
+    // }
+    this.getMovies();
+  }
 
 }
