@@ -21,7 +21,6 @@ export class MovieDetailsService {
   addComment(body: { movies_id: any; users_id: any; username: any; }, movieId: any, userId: any, username: any): Observable<any>{
     body.movies_id = movieId;
     body.users_id = userId;
-    body.username = username;
     return this.http.post<any>(`${this.httpUrl}comments`,body)
   }
 

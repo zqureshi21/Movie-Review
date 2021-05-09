@@ -21,10 +21,9 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // if (!localStorage.getItem('id_token')){
-    //   console.log('no id token')
-    //   this.router.navigateByUrl('login')
-    // }
+    if (!localStorage.getItem('id_token')){
+      this.router.navigateByUrl('login')
+    }
     this.getMovies();
   }
 
