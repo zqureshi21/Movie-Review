@@ -3,6 +3,8 @@ import { Router, ActivatedRoute} from '@angular/router';
 import { FormGroup, FormBuilder} from '@angular/forms';
 import { MovieDetailsService } from 'src/app/services/movie-details.service';
 import { MoviesService } from 'src/app/services/movies.service';
+import {EditCommentComponent} from "../edit-comment/edit-comment.component";
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-details',
@@ -23,12 +25,31 @@ export class DetailsComponent implements OnInit {
   @Input()movieInput: any = {};
   commentForm: FormGroup;
   selected = "";
+  isOpen = false;
 
-  constructor(private route: ActivatedRoute, private movieDetailService:MovieDetailsService,private movieService: MoviesService, private formBuilder: FormBuilder) {
+  constructor(private route: ActivatedRoute, private movieDetailService:MovieDetailsService,private movieService: MoviesService, private formBuilder: FormBuilder, private modalService: NgbModal) {
     this.commentForm = this.formBuilder.group({
       comment: '',
       rating: ''
     })
+  }
+
+  abilityToEdit(comment: { users_id: any; }){
+    if (comment.users_id == this.user.id){
+      return true
+    } else{
+      return false
+    }
+  }
+
+  openEditModal(comment: any){
+    const modal = this.modalService.open(EditCommentComponent);
+    modal.componentInstance.comment = comment
+    modal.result.then((result: any) => {
+      console.log(result);
+    }).catch((error: any) => {
+      console.log(error);
+    });
   }
 
   abilityToDelete(comment: { users_id: any; }){
@@ -50,7 +71,10 @@ export class DetailsComponent implements OnInit {
 
   // @ts-ignore
   ratingInput(e){
-    this.selected = e.target.getAttribute("data-line");
+    this.isOpen = this.modalService.hasOpenModals();
+    if(!this.isOpen) {
+      this.selected = e.target.getAttribute("data-line");
+    }
   }
 
   submit() {

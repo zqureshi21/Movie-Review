@@ -14,12 +14,11 @@ export class AuthInterceptor implements HttpInterceptor {
 
     if (idToken){
       const cloned = req.clone({
-
         headers: req.headers.set("Auth", idToken)
       });
       return next.handle(cloned);
     }else{
-      return next.handle(req)
+      return next.handle(req);
     }
 
   }

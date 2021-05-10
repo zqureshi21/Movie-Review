@@ -1,6 +1,7 @@
 <app-navbar></app-navbar>
 <h1 id="movieTitle">{{movie.title}}</h1>
 <div id="movieInfo">
+  <img id="movieImage" class="center" [src]="movie.image"><br><br>
   <label><b>Genre: </b></label>
   <p>{{movie.genre}}</p>
   <label><b>Plot:</b></label>
@@ -22,7 +23,7 @@
       <div class="card-body">
         <ngb-rating [max]="5" [rate]="comment.rating" [readonly]="true"></ngb-rating>
         <p class="card-text">{{comment.comment}}</p>
-        <button class="btn btn-light" *ngIf="comment.users_id === user.id">Edit</button>
+        <button class="btn btn-light" *ngIf="abilityToEdit(comment)" (click)="openEditModal(comment)">Edit</button>
         <button class="btn btn-light" *ngIf="abilityToDelete(comment)" (click)="deleteComment(comment.id)">Delete</button>
       </div>
     </div>
@@ -34,19 +35,19 @@
           <label>Leave a Comment:</label>
           <input type="text" class="form-control" formControlName="comment" required />
         </div>
-        <div class="form-group" required>
+        <div class="form-group" required *ngIf="!isOpen">
           <label>Leave a Rating:</label>
           <div class="rating">
             <h4 id="ratingHeader"><b>{{selected}}</b></h4>
-            <input data-line="Great" id="fiveStar" name="rating" type="radio" value="5" formControlName="rating" (click)="ratingInput($event)" class="radio-btn hide" />
+            <input data-line="Great" id="fiveStar" name="rating" type="radio" value="5" formControlName="rating" (click)="ratingInput($event)" class="radio-btn hide"/>
             <label for="fiveStar">☆</label>
-            <input data-line="Good" id="fourStar" name="rating" type="radio" value="4" formControlName="rating" (click)="ratingInput($event)" class="radio-btn hide" />
+            <input data-line="Good" id="fourStar" name="rating" type="radio" value="4" formControlName="rating" (click)="ratingInput($event)" class="radio-btn hide"/>
             <label for="fourStar">☆</label>
-            <input data-line="Mediocre" id="threeStar" name="rating" type="radio" value="3" formControlName="rating" (click)="ratingInput($event)" class="radio-btn hide" />
+            <input data-line="Mediocre" id="threeStar" name="rating" type="radio" value="3" formControlName="rating" (click)="ratingInput($event)" class="radio-btn hide"/>
             <label for="threeStar">☆</label>
-            <input data-line="Bad" id="twoStar" name="rating" type="radio" value="2" formControlName="rating" (click)="ratingInput($event)" class="radio-btn hide" />
+            <input data-line="Bad" id="twoStar" name="rating" type="radio" value="2" formControlName="rating" (click)="ratingInput($event)" class="radio-btn hide"/>
             <label for="twoStar">☆</label>
-            <input data-line="Very Bad" id="oneStar" name="rating" type="radio" value="1" formControlName="rating" (click)="ratingInput($event)" class="radio-btn hide" />
+            <input data-line="Very Bad" id="oneStar" name="rating" type="radio" value="1" formControlName="rating" (click)="ratingInput($event)" class="radio-btn hide"/>
             <label for="oneStar">☆</label>
             <div class="clear"></div>
           </div>

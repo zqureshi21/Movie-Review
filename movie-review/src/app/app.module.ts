@@ -17,6 +17,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ErrorComponent } from './components/error/error.component';
+import { EditCommentComponent } from './components/edit-comment/edit-comment.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ErrorComponent } from './components/error/error.component';
     DetailsComponent,
     FilterPipe,
     NavbarComponent,
-    ErrorComponent
+    ErrorComponent,
+    EditCommentComponent
   ],
     imports: [
         BrowserModule,

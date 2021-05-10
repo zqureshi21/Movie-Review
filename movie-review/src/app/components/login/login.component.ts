@@ -27,8 +27,7 @@ export class LoginComponent implements OnInit {
       this.authService.login(val.username, val.password)
         .subscribe(
           (data) => {
-            localStorage.setItem("id_token",data.authToken)
-
+            localStorage.setItem("id_token", data.authToken)
             this.router.navigateByUrl('dashboard');
           },() =>{
             this.displayErrorMessage = true;

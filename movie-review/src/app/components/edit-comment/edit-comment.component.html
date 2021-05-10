@@ -1,0 +1,34 @@
+<div class="modal-header">
+  <h4 class="modal-title">Edit Comment and Rating</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">Close</button>
+</div>
+<form [formGroup]="commentForm" (ngSubmit)="submit()">
+  <div class="modal-body">
+    <div class="container">
+      <div class="form-group">
+        <label>Comment:</label>
+        <input type="text" class="form-control" formControlName="comment" required />
+      </div>
+      <div class="form-group" required>
+        <label>Rating:</label>
+        <div class="ratingModal">
+          <h4 id="ratingHeader"><b>{{selected}}</b></h4>
+          <input data-line="Great" id="fiveStar" name="rating" type="radio" value="5" formControlName="rating" (click)="rating($event)" class="radio-btn hide"/>
+          <label for="fiveStar">☆</label>
+          <input data-line="Good" id="fourStar" name="rating" type="radio" value="4" formControlName="rating" (click)="rating($event)" class="radio-btn hide"/>
+          <label for="fourStar">☆</label>
+          <input data-line="Mediocre" id="threeStar" name="rating" type="radio" value="3" formControlName="rating" (click)="rating($event)" class="radio-btn hide"/>
+          <label for="threeStar">☆</label>
+          <input data-line="Bad" id="twoStar" name="rating" type="radio" value="2" formControlName="rating" (click)="rating($event)" class="radio-btn hide"/>
+          <label for="twoStar">☆</label>
+          <input data-line="Very Bad" id="oneStar" name="rating" type="radio" value="1" formControlName="rating" (click)="rating($event)" class="radio-btn hide"/>
+          <label for="oneStar">☆</label>
+          <div class="clear"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" [disabled]="!commentForm.valid">Submit</button>
+  </div>
+</form>
